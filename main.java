@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class main {
     //create variables
@@ -136,6 +137,35 @@ public class main {
         }
     }
 
+    public static void quitProgram(){
+        System.out.println("Are you sure you want to quit? (Y/N)");
+        Scanner quitConfScanner = new Scanner(System.in);
+        String quitConf = quitConfScanner.nextLine();
+
+        if (quitConf.equalsIgnoreCase("y")){
+            System.out.println("Ok. The program will close in 3 seconds.");
+            try{
+                Thread.sleep(3000);
+            }
+            catch (Exception e){
+                System.out.println("Something went wrong. Returning to main menu.");
+                actionMenu();
+            }
+
+            System.out.println("Exiting program with status 0.");
+            System.exit(0);
+        }
+        if (quitConf.equalsIgnoreCase("n")){
+            System.out.println("Ok. The program will not terminate.");
+            actionMenu();
+        }
+        else{
+            System.out.println("That input was invalid. Please try again.");
+            quitProgram();
+        }
+
+    }
+
     public static void actionMenu() {
         //this is the main menu where all the other methods will be called
         //the asterisks are a separator so the output looks cleaner
@@ -146,6 +176,7 @@ public class main {
         System.out.println("3) Call all entries");
         System.out.println("4) Delete an entry");
         System.out.println("5) Delete all entries");
+        System.out.println("6) Exit the program");
         Scanner userInput = new Scanner(System.in);
         String TheInput = userInput.nextLine();
 
@@ -171,6 +202,8 @@ public class main {
                 deleteEntry();
             case 5:
                 deleteAllEntries();
+            case 6:
+                quitProgram();
             default:
                 System.out.println("That's not a valid answer. Please try again.");
                 actionMenu();
